@@ -15,4 +15,4 @@ RUN gem install rails --no-rdoc --no-ri
 RUN rails new app
 WORKDIR /app
 
-CMD ["rails", "s"]
+CMD ["rails", "s", "-b", "0.0.0.0"]
