@@ -1,4 +1,4 @@
-FROM ruby:alpine
+FROM ruby:2.5-alpine
 
 # install bash
 RUN apk add -U bash
