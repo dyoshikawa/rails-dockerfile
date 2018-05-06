@@ -21,5 +21,6 @@ RUN sed -i -e "23i \  username: postgres" config/database.yml && \
     sed -i -e "26i \  port: 5432" config/database.yml && \
     sed -i -e "s/app_development/postgres/" config/database.yml
 RUN echo ".idea/" >> .gitignore
+RUN echo "web: bundle exec puma -C config/puma.rb" > Procfile
 
 CMD ["rails", "s", "-b", "0.0.0.0"]
