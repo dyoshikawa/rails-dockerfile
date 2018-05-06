@@ -12,7 +12,7 @@ RUN apk add libxml2-dev libxslt-dev libstdc++ tzdata mariadb-client-libs nodejs 
 RUN gem install rails --no-rdoc --no-ri
 
 # create rails project
-RUN rails new app -d postgresql --bundle-skip
+RUN rails new app --api -d postgresql --bundle-skip
 WORKDIR /app
 RUN bundle install --jobs=4 --path=vendor
 RUN sed -i -e "23i \  username: postgres" config/database.yml && \
