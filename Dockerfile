@@ -17,8 +17,7 @@ RUN apt install -y libxml2 \
                    default-libmysqlclient-dev
 RUN gem update bundler
 RUN gem install rails -v 5.2
-RUN gem install mysql2
-RUN gem install pg
+RUN gem install rubocop
 RUN rails new /myproject
 WORKDIR /myproject
 
