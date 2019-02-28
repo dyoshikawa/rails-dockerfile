@@ -1,24 +1,33 @@
-FROM ruby:2.5
+FROM ruby:2.5-alpine
 MAINTAINER dyoshikawa
 
-RUN apt update -y
-RUN apt install git
-RUN apt install -y libxml2 \
-                   libxml2-dev \
-                   libssl-dev \
-                   libreadline-dev \
-                   zlib1g-dev \
-                   ruby-railties \
-                   nodejs \
-                   gcc \
-                   make \
-                   zlib1g-dev \
-                   sqlite3 \
-                   default-libmysqlclient-dev
-RUN gem update bundler
-RUN gem install rails -v 5.2
-RUN gem install rubocop
-RUN rails new /myproject
-WORKDIR /myproject
+RUN apk upgrade --no-cache
+RUN apk add --update --no-cache git bash
+RUN apk add --no-cache \
+    postgresql-client \
+    nodejs \
+    tzdata && \
+    apk add --update --no-cache --virtual=build-dependencies \
+    build-base \
+    curl-dev \
+    linux-headers \
+    libxml2-dev \
+    libxslt-dev \
+    postgresql-dev \
+    mysql-dev \
+    ruby-dev \
+    yaml-dev \
+    zlib-dev
+RUN gem install bundler
+RUN gem install rails -v 5.0.0
 
-CMD rails s -b 0
+RUN apk add shadow
+RUN groupadd -g 1000 dyoshikawa
+RUN useradd -u 1000 -g 1000 dyoshikawa
+RUN mkdir /home/dyoshikawa && chown 1000:1000 -R /home/dyoshikawa
+RUN mkdir /work && chown 1000:1000 -R /work
+WORKDIR /work
+USER dyoshikawa
+
+ENTRYPOINT []
+CMD ['bash']
