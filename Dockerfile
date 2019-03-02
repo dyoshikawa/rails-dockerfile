@@ -19,11 +19,13 @@ RUN apk add --no-cache \
     yaml-dev \
     zlib-dev
 RUN gem install bundler
-RUN gem install rails -v 5.0.0
+RUN gem install rails -v 5.0.6
 
-RUN apk add shadow
+RUN apk add shadow sudo
 RUN groupadd -g 1000 dyoshikawa
 RUN useradd -u 1000 -g 1000 dyoshikawa
+RUN adduser dyoshikawa wheel \
+    && sed -e 's;^# \(%wheel.*NOPASSWD.*\);\1;g' -i /etc/sudoers
 RUN mkdir /home/dyoshikawa && chown 1000:1000 -R /home/dyoshikawa
 RUN mkdir /work && chown 1000:1000 -R /work
 WORKDIR /work
